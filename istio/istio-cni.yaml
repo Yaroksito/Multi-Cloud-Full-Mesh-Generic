@@ -1,0 +1,13 @@
+# --- IstioCNI: Integrating Istio with the Network ---
+# This resource is managed by the Red Hat Sail operator (for OSSM 3).
+# It installs the Istio CNI plugin on all nodes, which allows Istio to
+# transparently redirect pod traffic to the Envoy proxy without needing
+# privileged init containers. This is a more secure and efficient setup.
+apiVersion: sailoperator.io/v1alpha1
+kind: IstioCNI
+metadata:
+  name: default
+spec:
+  # The namespace where the Istio CNI daemonset will be installed.
+  namespace: istio-cni
+  version: v1.24.1

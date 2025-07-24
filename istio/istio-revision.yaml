@@ -1,0 +1,32 @@
+# --- IstioRevision: A Specific Istio Control Plane Version ---
+# Note: As mentioned in the learning path, you typically do not create this
+# resource directly. It is created and managed automatically by the higher-level
+# 'Istio' custom resource. It represents a specific, deployed version of the
+# Istio control plane (istiod).
+apiVersion: sailoperator.io/v1alpha1
+kind: IstioRevision
+metadata:
+  name: {istio-revision-name} # e.g., 'default' or 'istio-test'
+  ownerReferences:
+    # This section shows that this object is owned and managed by an 'Istio' resource.
+    - apiVersion: sailoperator.io/v1alpha1
+      kind: Istio
+      name: default
+spec:
+  namespace: istio-system
+  values:
+    # This section contains the detailed configuration that is passed down to
+    # the istiod deployment for this specific revision.
+    global:
+      platform: openshift
+    pilot:
+      # Specifies the exact container image for the istiod pilot component.
+      image: 'registry.redhat.io/openshift-service-mesh-tech-preview/istio-pilot-rhel9@sha256:...'
+    meshConfig:
+      # This selector is inherited from the parent 'Istio' resource and tells this
+      # control plane which namespaces to watch and manage.
+      discoverySelectors:
+        - matchLabels:
+            istio-discovery: enabled
+  version: v1.24.1
+

@@ -1,0 +1,10 @@
+# --- ServiceExport: Advertising the Service ---
+# This Submariner resource "advertises" the local ClusterIP service to all
+# other clusters in the clusterset, making it discoverable.
+apiVersion: multicluster.x-k8s.io/v1alpha1
+kind: ServiceExport
+metadata:
+  # The name must match the local ClusterIP service you want to export.
+  name: {service-name}
+  namespace: {namespace-name}
+

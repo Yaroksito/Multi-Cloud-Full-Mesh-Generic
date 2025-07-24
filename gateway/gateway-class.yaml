@@ -1,0 +1,20 @@
+# This is a cluster-scoped resource that defines a "type" or "class" of
+# gateway that can be provisioned in the cluster. It acts as a template,
+# linking a Gateway resource to the controller that will manage it.
+#
+# Note: You typically do not create this resource manually. It is automatically
+# created by the Istio/OpenShift Service Mesh operator upon installation.
+# ===================================================================
+apiVersion: gateway.networking.k8s.io/v1
+kind: GatewayClass
+metadata:
+  # The name of the GatewayClass. When you create a Gateway resource, you will
+  # reference this name in its 'gatewayClassName' field.
+  name: istio
+spec:
+  # This is the most critical field. It specifies the unique name of the controller
+  # that is responsible for managing any Gateway objects of this class.
+  # 'istio.io/gateway-controller' is the official name for the Istio controller.
+  controllerName: istio.io/gateway-controller
+  # A human-readable description of what this class provides.
+  description: The default Istio GatewayClass

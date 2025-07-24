@@ -1,0 +1,27 @@
+# This Gateway API resource defines the entry point for all external traffic.
+# It specifies the port, protocol, and TLS settings for the ingress listener.
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+   name: {app-name-gateway}
+ namespace: {app-namespace-name}
+spec:
+ gatewayClassName: istio
+ listeners:
+   - name: https-default
+     protocol: HTTPS            # Ensures secure communication
+     port: 4443                 # Fixed, secure port for external access
+     hostname: *.org.domain     # A wildcard hostname for all applications
+     tls:
+       mode: Terminate          # Performs TLS decryption at the Gateway
+       certificateRefs:
+         - group: ""
+           kind: Secret
+           name: {wildcard-tls-secret} # Name of the TLS secret (created by cert-manager)
+           namespace: {secret-namepace}     # Namespace where the TLS secret resides
+     allowedRoutes:
+       namespaces:
+         from: Selector
+         selector:
+           matchLabels:
+             shared-gateway-access: "true" # Allows HTTPRoutes from namespaces with this label to attach

@@ -1,0 +1,18 @@
+# --- Submariner Gateway ---
+# Note: This is a Submariner-specific resource, not a Kubernetes Gateway API resource.
+# It represents a node that has been designated as a Submariner gateway,
+# responsible for routing traffic through the encrypted tunnels. This object is
+# typically managed by the Submariner operator, not created manually.
+apiVersion: submariner.io/v1
+kind: Gateway
+metadata:
+  # The name of the gateway is typically the name of the worker node.
+  name: {node-name}.{domain}
+  # This resource lives in the namespace where the submariner operator is installed.
+  namespace: submariner-operator
+  annotations:
+    # When Globalnet is enabled, this annotation shows the globally unique IP
+    # assigned to this gateway.
+    submariner.io/globalIp: 242.0.255.253
+spec: {}
+

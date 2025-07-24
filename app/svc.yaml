@@ -1,0 +1,21 @@
+# --- Service (ClusterIP): The Local Entry Point ---
+# This is a standard internal service that provides a stable IP address
+# and DNS name for your application pods within a single cluster.
+# Submariner will monitor the health of the pods behind this service.
+apiVersion: v1
+kind: Service
+metadata:
+  name: {service-name}
+  labels:
+    app.kubernetes.io/name: {service-name}
+spec:
+  type: ClusterIP
+  selector:
+    # Selects the pods from the Deployment based on their label.
+    app.kubernetes.io/name: {service-name}
+  ports:
+    - name: {svc-name-port}
+      port: {port number}
+      targetPort: app-port
+      protocol: TCP
+

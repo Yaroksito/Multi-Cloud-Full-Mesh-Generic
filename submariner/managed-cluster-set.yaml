@@ -1,0 +1,13 @@
+# --- ManagedClusterSet: Grouping Clusters for Submariner ---
+# This ACM resource defines a logical group of clusters that will be
+# connected by Submariner.
+apiVersion: cluster.open-cluster-management.io/v1beta2
+kind: ManagedClusterSet
+metadata:
+  annotations:
+    cluster.open-cluster-management.io/submariner-broker-ns: {broke-namespace}
+    name: {submariner}-{cluster-a-cluster-b}
+spec:
+  clusterSelector:
+    selectorType: ExclusiveClusterSetLabel
+

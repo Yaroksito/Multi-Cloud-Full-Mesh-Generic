@@ -1,0 +1,18 @@
+# --- Istio: The Service Mesh Control Plane ---
+# This custom resource, managed by the Sail operator, deploys and configures
+# the Istio control plane (istiod) for the entire cluster.
+apiVersion: sailoperator.io/v1alpha1
+kind: Istio
+metadata:
+ name: {istio}-{env}
+spec:
+ # The namespace where the Istio control plane components will be installed.
+ namespace: istio-system
+ values:
+   meshConfig:
+     # This tells Istio to only manage namespaces with this specific label.
+     discoverySelectors:
+       - matchLabels:
+           istio-discovery: enabled
+ version: v1.24.1
+

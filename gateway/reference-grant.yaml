@@ -1,0 +1,27 @@
+# --- ReferenceGrant: Secure Cross-Namespace References ---
+# This is a critical security resource for the Gateway API. It provides a way
+# for a namespace owner to explicitly trust and allow resources from another
+# namespace to reference objects within it.
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant
+metadata:
+  name: allow-gateway-references
+  # This ReferenceGrant must be created in the target namespace (e.g., the application's namespace).
+  namespace: {application-namespace}
+spec:
+  # The 'from' section specifies who is allowed to make the reference.
+  from:
+    # This allows a Gateway from the 'gateway-namespace' to reference objects here.
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      namespace: {gateway-namespace}
+  # The 'to' section specifies what objects they are allowed to reference.
+  to:
+    # This rule allows the trusted Gateway to reference Secrets (for TLS).
+    - group: ""
+      kind: Secret
+      name: {secret-name}
+    # This rule allows the trusted Gateway to reference a specific HTTPRoute.
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: {httproute-name}

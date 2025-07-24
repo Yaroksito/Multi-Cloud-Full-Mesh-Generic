@@ -1,0 +1,16 @@
+# --- ManagedClusterAddOn for Cluster B ---
+# This resource tells ACM to enable the "submariner" add-on for a specific
+# managed cluster. This is the trigger for the installation process.
+apiVersion: addon.open-cluster-management.io/v1alpha1
+kind: ManagedClusterAddOn
+metadata:
+ # The name of the add-on to enable.
+ name: submariner
+ # CRITICAL: The namespace must match the name of the ManagedCluster resource
+ # in ACM that represents your first managed cluster (e.g., "cluster-b").
+ namespace: {cluster-b}
+spec:
+ # Specifies the namespace on the managed cluster where the Submariner
+ # operator and its components will be installed.
+ installNamespace: submariner-operator
+

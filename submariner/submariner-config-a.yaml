@@ -1,0 +1,31 @@
+# --- SubmarinerConfig for Cluster A ---
+# This resource provides the specific configuration for the Submariner
+# deployment on the managed cluster defined above.
+apiVersion: submarineraddon.open-cluster-management.io/v1alpha1
+kind: SubmarinerConfig
+metadata:
+  name: submariner
+  # This namespace must also match the name of the ManagedCluster in ACM.
+  namespace: {cluster-a}
+spec:
+  # NATTEnable is crucial for environments where gateway nodes are behind a NAT,
+  # which is common in public cloud and some on-premise setups.
+  NATTEnable: true
+  # Specifies the number of nodes in the managed cluster that will be designated
+  # as Submariner gateways for high availability.
+  gatewayConfig:
+    gateways: 1
+  # The rest of the fields are standard configurations for the IPsec tunnel.
+  Debug: false
+  IPSecDebug: false
+  IPSecIKEPort: 500
+  IPSecNATTPort: 4500
+  NATTDiscoveryPort: 4900
+  airGappedDeployment: true
+  cableDriver: libreswan
+  forceUDPEncaps: false
+  globalCIDR: ""
+  haltOnCertificateError: true
+  insecureBrokerConnection: false
+  loadBalancerEnable: false
+

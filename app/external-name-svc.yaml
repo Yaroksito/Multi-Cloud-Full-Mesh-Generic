@@ -1,0 +1,13 @@
+# --- Service (ExternalName): The Bridge to Multi-Cluster ---
+# This is the crucial "bridge" in our architecture. It's a local service
+# that acts as a DNS alias. Instead of pointing to local pods, it points
+# to the multi-cluster DNS name provided by Submariner.
+apiVersion: v1
+kind: Service
+metadata:
+  name: {service-name-external}
+  namespace: {namespace-name}
+spec:
+  # This field is the key: it points to the Submariner multi-cluster service name.
+  externalName: {service-name-namespace-name.svc.clusterset.local}
+  type: ExternalName

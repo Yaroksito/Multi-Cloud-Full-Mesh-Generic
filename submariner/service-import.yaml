@@ -1,0 +1,9 @@
+kind: ServiceImport
+metadata:
+  name: {app-name}
+  namespace: application-submariner
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  type: ClusterSetIP

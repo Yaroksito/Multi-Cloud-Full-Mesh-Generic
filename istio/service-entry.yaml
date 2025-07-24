@@ -1,0 +1,22 @@
+# --- ServiceEntry: Teaching the Service Mesh ---
+# This Istio resource tells the service mesh about the existence of the
+# Submariner multi-cluster service, allowing traffic to be routed to it securely.
+apiVersion: networking.istio.io/v1
+kind: ServiceEntry
+metadata:
+  name: {app-name-service-entry}
+  namespace: {app-namespace-name}
+spec:
+  hosts:
+  # The FQDN of the multi-cluster service.
+  - {service-name-namespace-name.svc.clusterset.local}
+  # MESH_INTERNAL is critical: it tells Istio this service is part of our trusted
+  # mesh, enabling mTLS and advanced routing.
+  location: MESH_INTERNAL
+  ports:
+  - name: http
+    number: {port number}
+    protocol: HTTP
+  # Tells Istio to resolve this host using standard DNS (which Submariner controls).
+  resolution: DNS
+

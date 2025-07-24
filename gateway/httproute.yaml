@@ -1,0 +1,30 @@
+# --- HTTPRoute: The Ingress Routing Rule ---
+# This Gateway API resource defines how traffic reaching our main Gateway
+# should be routed. It attaches to the Gateway and directs traffic to our
+# ExternalName service, triggering the multi-cluster DNS lookup.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {app-name}-httproute
+spec:
+  parentRefs:
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    # Must match the name of the Gateway resource deployed by the platform team.
+    name: {app-name-gateway} # subscribes to the created Gateway
+    namespace: {gateway-namespace-name}
+  hostnames:
+  - "my-app.apps.yourcompany.com" # The public URL for this application.
+  rules:
+  - backendRefs:
+      # This directs all matching traffic to our "bridge" service.
+    - group: ""
+      kind: Service
+      name: {service-name-external}
+      port: {port Number}
+      weight: 1
+    matches:
+    - path:
+        type: PathPrefix
+        value: /
+
