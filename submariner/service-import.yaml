@@ -1,9 +1,18 @@
+# Note: You do not create this resource manually. It is created and managed
+# automatically by the Submariner Lighthouse agent in any cluster that needs
+# to consume a multi-cluster service.
+apiVersion: multicluster.x-k8s.io/v1alpha1
 kind: ServiceImport
 metadata:
+  # The name of the ServiceImport will match the name of the original service
+  # that was exported from another cluster.
   name: {app-name}
-  namespace: application-submariner
+  # It is created in the same namespace where the service was originally defined,
+  # ensuring consistent naming across the cluster set.
+  namespace: {namespace-name}
 spec:
+  # This section lists the ports that are exposed by the multi-cluster service.
   ports:
   - port: 8080
     protocol: TCP
-  type: ClusterSetIP
+  # The type 'ClusterSetIP' indicates that this service represents a stable IP
