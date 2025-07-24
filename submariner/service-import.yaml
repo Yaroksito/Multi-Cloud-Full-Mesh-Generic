@@ -6,7 +6,7 @@ kind: ServiceImport
 metadata:
   # The name of the ServiceImport will match the name of the original service
   # that was exported from another cluster.
-  name: {app-name}
+  name: {service-name}
   # It is created in the same namespace where the service was originally defined,
   # ensuring consistent naming across the cluster set.
   namespace: {namespace-name}
